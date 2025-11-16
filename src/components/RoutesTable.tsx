@@ -29,7 +29,7 @@ export function RoutesTable({ routes }: RoutesTableProps) {
       return { 
         icon: CheckCircle2, 
         color: 'text-brand-primary', 
-        bg: 'bg-brand-primary/10',
+        bg: 'bg-green-50',
         text: 'Completada'
       };
     }
@@ -43,21 +43,15 @@ export function RoutesTable({ routes }: RoutesTableProps) {
     }
     return { 
       icon: Clock, 
-      color: 'text-brand-primary', 
-      bg: 'bg-brand-primary/10',
+      color: 'text-blue-600', 
+      bg: 'bg-blue-50',
       text: 'En progreso'
     };
   };
 
-  const getCoverageColor = (coverage: number) => {
-    if (coverage >= 80) return 'text-brand-primary';
-    if (coverage >= 50) return 'text-yellow-600';
-    return 'text-red-600';
-  };
-
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-      <div className="px-4 md:px-6 py-4 border-b border-gray-200 bg-gray-50">
+      <div className="px-6 py-4 border-b border-gray-200">
         <h3 className="text-brand-neutral">Recorridos del Día</h3>
         <p className="text-sm text-gray-500 mt-1">{routes.length} microrutas asignadas</p>
       </div>
@@ -83,13 +77,13 @@ export function RoutesTable({ routes }: RoutesTableProps) {
               return (
                 <TableRow key={route.id} className="hover:bg-gray-50">
                   <TableCell>
-                    <span className="text-brand-neutral font-medium">{route.id}</span>
+                    <span className="text-brand-neutral">{route.id}</span>
                   </TableCell>
                   <TableCell>
                     <span className="text-brand-neutral">{route.collector}</span>
                   </TableCell>
                   <TableCell className="text-center">
-                    <span className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-sm font-medium">
+                    <span className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-sm">
                       {route.bagsCollected}
                     </span>
                   </TableCell>
@@ -101,9 +95,7 @@ export function RoutesTable({ routes }: RoutesTableProps) {
                           style={{ width: `${route.coverage}%` }}
                         />
                       </div>
-                      <span className={`text-sm font-medium w-12 ${getCoverageColor(route.coverage)}`}>
-                        {route.coverage}%
-                      </span>
+                      <span className="text-sm text-gray-600 w-12">{route.coverage}%</span>
                     </div>
                   </TableCell>
                   <TableCell>
@@ -114,14 +106,14 @@ export function RoutesTable({ routes }: RoutesTableProps) {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm ${statusConfig.bg} ${statusConfig.color} font-medium`}>
+                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm ${statusConfig.bg} ${statusConfig.color}`}>
                       <StatusIcon className="w-4 h-4" />
                       {statusConfig.text}
                     </span>
                   </TableCell>
                   <TableCell className="text-center">
                     {route.incidents > 0 ? (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 text-sm font-medium">
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 text-sm">
                         <AlertTriangle className="w-3 h-3" />
                         {route.incidents}
                       </span>

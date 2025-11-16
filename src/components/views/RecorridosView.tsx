@@ -1,68 +1,55 @@
-import { useState } from "react";
-import { MapView } from "../MapView";
-import { CollectorsList } from "../CollectorsList";
-import { RoutesTable } from "../RoutesTable";
+import { useState } from 'react';
+import { MapView } from '../MapView';
+import { CollectorsList } from '../CollectorsList';
+import { RoutesTable } from '../RoutesTable';
 
 interface Collector {
-    id: number;
-    name: string;
-    photo: string;
-    microroute: string;
-    status: "en-ruta" | "fuera-ruta" | "sin-señal";
-    lastUpdate: string;
+  id: number;
+  name: string;
+  photo: string;
+  microroute: string;
+  status: 'en-ruta' | 'fuera-ruta' | 'sin-señal';
+  lastUpdate: string;
 }
 
 interface Route {
-    id: string;
-    collector: string;
-    bagsCollected: number;
-    coverage: number;
-    timeActual: string;
-    timeEstimated: string;
-    status: "En progreso" | "Completada";
-    incidents: number;
+  id: string;
+  collector: string;
+  bagsCollected: number;
+  coverage: number;
+  timeActual: string;
+  timeEstimated: string;
+  status: 'En progreso' | 'Completada' | 'Incompleta';
+  incidents: number;
 }
 
 interface RecorridosViewProps {
-    selectedMacroroute: string;
-    collectors: Collector[];
-    routes: Route[];
-    initialSelectedCollector?: number | null;
+  selectedMacroroute: string;
+  collectors: Collector[];
+  routes: Route[];
 }
 
-export function RecorridosView({
-                                   selectedMacroroute,
-                                   collectors,
-                                   routes,
-                                   initialSelectedCollector,
-                               }: RecorridosViewProps) {
-    const [selectedCollector, setSelectedCollector] = useState<number | null>(
-        initialSelectedCollector ?? null
-    );
+export function RecorridosView({ selectedMacroroute, collectors, routes }: RecorridosViewProps) {
+  const [selectedCollector, setSelectedCollector] = useState<number | null>(null);
 
-    return (
-        <div className="h-full flex flex-col gap-4">
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 flex-1 min-h-0">
-                <div className="xl:col-span-2 min-h-[400px] xl:min-h-0">
-                    <MapView
-                        macroroute={selectedMacroroute}
-                        selectedCollector={selectedCollector}
-                        collectors={collectors}
-                    />
-                </div>
-
-                <div className="xl:col-span-1 min-h-[300px] xl:min-h-0">
-                    <CollectorsList
-                        collectors={collectors}
-                        selectedCollector={selectedCollector}
-                        onSelectCollector={setSelectedCollector}
-                    />
-                </div>
-            </div>
-
-            <div className="overflow-hidden">
-                <RoutesTable routes={routes} />
-            </div>
+  return (
+    <div className="flex flex-col gap-4 h-full">
+      <div className="flex-1 flex gap-4">
+        <div className="flex-1 flex flex-col gap-4">
+          <MapView 
+            macroroute={selectedMacroroute}
+            collectors={collectors}
+            selectedCollector={selectedCollector}
+          />
+          <RoutesTable routes={routes} />
         </div>
-    );
+        
+        <CollectorsList 
+          collectors={collectors}
+          selectedCollector={selectedCollector}
+          onSelectCollector={setSelectedCollector}
+        />
+      </div>
+    </div>
+  );
 }

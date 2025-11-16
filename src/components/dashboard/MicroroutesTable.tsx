@@ -1,4 +1,13 @@
-import { AlertCircle} from 'lucide-react';
+import { Eye, AlertTriangle, CheckCircle2, Clock, TrendingUp, TrendingDown } from 'lucide-react';
+import { Button } from '../ui/button';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../ui/table';
 
 interface Microroute {
   id: string;
@@ -24,139 +33,160 @@ const macrorouteColors: { [key: string]: { bg: string; text: string } } = {
 };
 
 export function MicroroutesTable({ microroutes }: MicroroutesTableProps) {
-  const getCoverageColor = (coverage: number) => {
-    if (coverage >= 80) return 'text-brand-primary bg-brand-primary/10';
-    if (coverage >= 50) return 'text-yellow-600 bg-yellow-500/10';
-    return 'text-red-600 bg-red-500/10';
+  const getStatusConfig = (status: string) => {
+    const configs = {
+      'Completada': { 
+        icon: CheckCircle2, 
+        color: 'text-brand-primary', 
+        bg: 'bg-green-50',
+        text: 'Completada'
+      },
+      'En progreso': { 
+        icon: Clock, 
+        color: 'text-blue-600', 
+        bg: 'bg-blue-50',
+        text: 'En progreso'
+      },
+      'Desviada': { 
+        icon: AlertTriangle, 
+        color: 'text-red-600', 
+        bg: 'bg-red-50',
+        text: 'Desviada'
+      }
+    };
+    return configs[status as keyof typeof configs];
   };
 
-  const getStatusColor = (status: Microroute['status']) => {
-    switch (status) {
-      case 'Completada':
-        return 'text-brand-primary bg-brand-primary/10 border-brand-primary/20';
-      case 'En progreso':
-        return 'text-brand-primary bg-brand-primary/10 border-brand-primary/20';
-      case 'Desviada':
-        return 'text-yellow-600 bg-yellow-500/10 border-yellow-500/20';
-      default:
-        return 'text-gray-600 bg-gray-500/10 border-gray-500/20';
+  const getTimeComparison = (actual: string, estimated: string) => {
+    // Simple comparison based on string (could be improved with actual time parsing)
+    const actualMinutes = parseInt(actual.split('h')[0]) * 60 + parseInt(actual.split('h')[1]);
+    const estimatedMinutes = parseInt(estimated.split('h')[0]) * 60 + parseInt(estimated.split('h')[1]);
+    
+    if (actualMinutes < estimatedMinutes) {
+      return { icon: TrendingUp, color: 'text-brand-primary', ahead: true };
+    } else if (actualMinutes > estimatedMinutes) {
+      return { icon: TrendingDown, color: 'text-red-600', ahead: false };
     }
+    return null;
   };
-
-  if (microroutes.length === 0) {
-    return (
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
-          <h3 className="text-brand-neutral">Detalle de Microrutas</h3>
-        </div>
-        <div className="p-12 text-center">
-          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <AlertCircle className="w-8 h-8 text-gray-400" />
-          </div>
-          <h4 className="text-brand-neutral mb-2">No hay microrutas seleccionadas</h4>
-          <p className="text-gray-600 text-sm">
-            Selecciona al menos una macroruta en el filtro superior para ver los datos
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
-        <h3 className="text-brand-neutral">Detalle de Microrutas</h3>
+    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="px-6 py-4 border-b border-gray-200">
+        <h3 className="text-lg text-brand-neutral">Microrutas del Día</h3>
+        <p className="text-sm text-gray-500 mt-1">{microroutes.length} microrutas asignadas</p>
       </div>
-      
+
       <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-gray-50 border-b border-gray-200">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                Microruta
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                Recolector
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                Cobertura
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                Tiempo
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                Bolsas
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                Estado
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                Incidencias
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-100">
-            {microroutes.map((microroute) => (
-              <tr key={microroute.id} className="hover:bg-gray-50 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center gap-2">
-                    <div 
-                      className="w-3 h-3 rounded-full" 
-                      style={{ backgroundColor: getMacrorouteColor(microroute.macroroute) }}
-                    />
-                    <span className="font-medium text-brand-neutral">{microroute.id}</span>
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="text-gray-900">{microroute.collector}</span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center gap-2">
-                    <div className="flex-1 max-w-[100px] bg-gray-200 rounded-full h-2 overflow-hidden">
-                      <div 
-                        className="h-full bg-brand-primary rounded-full transition-all"
-                        style={{ width: `${microroute.coverage}%` }}
-                      />
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>ID</TableHead>
+              <TableHead>Recolector</TableHead>
+              <TableHead>Macroruta</TableHead>
+              <TableHead className="text-center">Cobertura</TableHead>
+              <TableHead>Tiempo</TableHead>
+              <TableHead className="text-center">Bolsas</TableHead>
+              <TableHead>Estado</TableHead>
+              <TableHead className="text-center">Incidentes</TableHead>
+              <TableHead className="text-right">Acción</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {microroutes.map((route) => {
+              const statusConfig = getStatusConfig(route.status);
+              const StatusIcon = statusConfig.icon;
+              const macrorouteColor = macrorouteColors[route.macroroute];
+              const timeComparison = getTimeComparison(route.timeActual, route.timeEstimated);
+              const TimeIcon = timeComparison?.icon;
+
+              return (
+                <TableRow key={route.id} className="hover:bg-gray-50">
+                  <TableCell>
+                    <span className="text-gray-900">{route.id}</span>
+                  </TableCell>
+                  
+                  <TableCell>
+                    <span className="text-gray-900">{route.collector}</span>
+                  </TableCell>
+                  
+                  <TableCell>
+                    <span className={`inline-flex px-3 py-1 rounded-full text-sm ${macrorouteColor.bg} ${macrorouteColor.text}`}>
+                      {route.macroroute}
+                    </span>
+                  </TableCell>
+                  
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden min-w-[80px]">
+                        <div 
+                          className={`h-full transition-all ${
+                            route.coverage >= 80 ? 'bg-green-500' :
+                            route.coverage >= 50 ? 'bg-blue-500' :
+                            'bg-yellow-500'
+                          }`}
+                          style={{ width: `${route.coverage}%` }}
+                        />
+                      </div>
+                      <span className="text-sm text-gray-900 min-w-[45px] text-right">
+                        {route.coverage}%
+                      </span>
                     </div>
-                    <span className={`text-sm font-medium px-2 py-0.5 rounded ${getCoverageColor(microroute.coverage)}`}>
-                      {microroute.coverage}%
+                  </TableCell>
+                  
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <div className="text-sm">
+                        <span className="text-gray-900">{route.timeActual}</span>
+                        <span className="text-gray-400 mx-1">/</span>
+                        <span className="text-gray-500">{route.timeEstimated}</span>
+                      </div>
+                      {timeComparison && TimeIcon && (
+                        <TimeIcon className={`w-4 h-4 ${timeComparison.color}`} />
+                      )}
+                    </div>
+                  </TableCell>
+                  
+                  <TableCell className="text-center">
+                    <span className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-[#0E7A3B]/10 text-[#0E7A3B] text-sm">
+                      {route.bags}
                     </span>
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm">
-                    <div className="text-gray-900">{microroute.timeActual}</div>
-                    <div className="text-gray-500 text-xs">Est: {microroute.timeEstimated}</div>
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="font-medium text-brand-neutral">{microroute.bags}</span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(microroute.status)}`}>
-                    {microroute.status}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center gap-1">
-                    {microroute.incidents > 0 && (
-                      <AlertCircle className="w-4 h-4 text-yellow-600" />
+                  </TableCell>
+                  
+                  <TableCell>
+                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm ${statusConfig.bg} ${statusConfig.color}`}>
+                      <StatusIcon className="w-4 h-4" />
+                      {statusConfig.text}
+                    </span>
+                  </TableCell>
+                  
+                  <TableCell className="text-center">
+                    {route.incidents > 0 ? (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-orange-50 text-orange-700 text-sm">
+                        <AlertTriangle className="w-3 h-3" />
+                        {route.incidents}
+                      </span>
+                    ) : (
+                      <span className="text-gray-400">—</span>
                     )}
-                    <span className={microroute.incidents > 0 ? 'text-yellow-600 font-medium' : 'text-gray-500'}>
-                      {microroute.incidents}
-                    </span>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  </TableCell>
+                  
+                  <TableCell className="text-right">
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      className="text-[#3B82F6] hover:text-[#2563EB] hover:bg-blue-50"
+                    >
+                      <Eye className="w-4 h-4 mr-1" />
+                      Ver Detalle
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );
-}
-
-function getMacrorouteColor(macroroute: string) {
-  const color = macrorouteColors[macroroute];
-  return color ? color.bg.replace('bg-', '') : 'gray-300';
 }

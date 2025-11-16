@@ -13,7 +13,7 @@ export function Sidebar({ activeView, setActiveView }: SidebarProps) {
   ];
 
   return (
-    <aside className="w-16 md:w-20 bg-brand-primary-dark border-r border-white/10 flex flex-col items-center py-4 md:py-6 gap-3 md:gap-4">
+    <aside className="w-20 bg-brand-primary-dark border-r border-white/10 flex flex-col items-center py-6 gap-4">
       {menuItems.map((item) => {
         const Icon = item.icon;
         const isActive = activeView === item.id;
@@ -23,7 +23,7 @@ export function Sidebar({ activeView, setActiveView }: SidebarProps) {
             key={item.id}
             onClick={() => setActiveView(item.id)}
             className={`
-              w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center transition-all
+              w-14 h-14 rounded-xl flex items-center justify-center transition-all
               ${isActive 
                 ? 'bg-brand-primary text-white shadow-lg' 
                 : 'text-white/60 hover:bg-white/10 hover:text-white'
@@ -31,7 +31,7 @@ export function Sidebar({ activeView, setActiveView }: SidebarProps) {
             `}
             title={item.label}
           >
-            <Icon className="w-5 h-5 md:w-6 md:h-6" />
+            <Icon className="w-6 h-6" />
           </button>
         );
       })}

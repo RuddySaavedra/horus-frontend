@@ -195,7 +195,6 @@ export default function App() {
   const [selectedDate, setSelectedDate] = useState('2025-11-15');
   const [selectedMacroroutes, setSelectedMacroroutes] = useState<string[]>(['Verde', 'Roja', 'Naranja', 'Lila']);
   const [activeView, setActiveView] = useState('dashboard');
-  const [selectedCollectorId, setSelectedCollectorId] = useState<number | null>(null);
 
   const toggleMacroroute = (macroroute: string) => {
     setSelectedMacroroutes(prev => 
@@ -209,13 +208,8 @@ export default function App() {
     selectedMacroroutes.includes(mr.macroroute)
   );
 
-  // Get the first selected macroroute for the map view
+  // Get the first selected macroroute for the recorridos view
   const currentMacroroute = selectedMacroroutes.length > 0 ? selectedMacroroutes[0] : 'Verde';
-
-  const handleNavigateToMap = (collectorId: number) => {
-    setSelectedCollectorId(collectorId);
-    setActiveView('recorridos');
-  };
 
   return (
     <div className="min-h-screen bg-[#F4F4F5]">
@@ -230,7 +224,7 @@ export default function App() {
       <div className="flex h-[calc(100vh-88px)]">
         <Sidebar activeView={activeView} setActiveView={setActiveView} />
         
-        <main className="flex-1 p-4 md:p-6 overflow-auto">
+        <main className="flex-1 p-6 overflow-auto">
           {activeView === 'dashboard' && (
             <DashboardView microroutes={filteredMicroroutes} />
           )}
@@ -240,12 +234,11 @@ export default function App() {
               selectedMacroroute={currentMacroroute}
               collectors={mockCollectors}
               routes={mockRoutes}
-              initialSelectedCollector={selectedCollectorId}
             />
           )}
           
           {activeView === 'recolectores' && (
-            <RecolectoresView onNavigateToMap={handleNavigateToMap} />
+            <RecolectoresView />
           )}
         </main>
       </div>

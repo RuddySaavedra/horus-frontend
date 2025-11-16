@@ -1,5 +1,4 @@
-import { BarChart, Bar,  PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area,
-    AreaChart } from 'recharts';
+import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,  Area, AreaChart } from 'recharts';
 
 interface Microroute {
   macroroute: string;
