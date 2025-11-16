@@ -1,4 +1,4 @@
-import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Area,
+import { BarChart, Bar,  PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area,
     AreaChart } from 'recharts';
 
 interface Microroute {

@@ -14,7 +14,7 @@ interface MapViewProps {
   selectedCollector: number | null;
 }
 
-export function MapView({ macroroute, collectors, selectedCollector }: MapViewProps) {
+export function MapView({ macroroute, selectedCollector }: MapViewProps) {
   const [hoveredPoint, setHoveredPoint] = useState<string | null>(null);
 
   // Simulate route points and incidents

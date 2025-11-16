@@ -1,5 +1,4 @@
-import { Calendar, AlertCircle } from 'lucide-react';
-import { Badge } from '../ui/badge';
+import { Calendar } from 'lucide-react';
 import { Package } from 'lucide-react';
 
 interface Microroute {
@@ -27,11 +26,7 @@ export function DashboardHeader({
   setSelectedDate, 
   selectedMacroroutes, 
   toggleMacroroute,
-  microroutes 
 }: DashboardHeaderProps) {
-  const inProgress = microroutes.filter(m => m.status === 'En progreso').length;
-  const completed = microroutes.filter(m => m.status === 'Completada').length;
-  const totalIncidents = microroutes.reduce((sum, m) => sum + m.incidents, 0);
 
   return (
     <header className="bg-white border-b border-gray-200 px-4 md:px-6 py-4">

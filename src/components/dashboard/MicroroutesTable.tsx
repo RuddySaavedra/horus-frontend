@@ -1,13 +1,4 @@
-import { AlertCircle, AlertTriangle, CheckCircle2, Clock, TrendingUp, TrendingDown } from 'lucide-react';
-import { Button } from '../ui/button';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '../ui/table';
+import { AlertCircle} from 'lucide-react';
 
 interface Microroute {
   id: string;

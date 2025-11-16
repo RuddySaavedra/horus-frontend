@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Phone, MapPin, TrendingUp, Calendar } from 'lucide-react';
+import { Search, Phone, MapPin, TrendingUp } from 'lucide-react';
 
 interface Collector {
   id: number;
@@ -176,7 +176,7 @@ interface RecolectoresViewProps {
 }
 
 export function RecolectoresView({ onNavigateToMap }: RecolectoresViewProps) {
-  const [selectedCollector, setSelectedCollector] = useState<Collector | null>(null);
+  //const [selectedCollector, setSelectedCollector] = useState<Collector | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
 
@@ -206,7 +206,7 @@ export function RecolectoresView({ onNavigateToMap }: RecolectoresViewProps) {
             Gestión y seguimiento de personal
           </p>
         </div>
-        
+
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <div className="relative flex-1 sm:flex-initial">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -218,7 +218,7 @@ export function RecolectoresView({ onNavigateToMap }: RecolectoresViewProps) {
               className="w-full sm:w-64 pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary"
             />
           </div>
-          
+
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value as any)}
@@ -304,7 +304,7 @@ export function RecolectoresView({ onNavigateToMap }: RecolectoresViewProps) {
                   </div>
                 </div>
               </div>
-              
+
               <span className={`
                 text-xs px-2 py-1 rounded-full
                 ${collector.status === 'activo' ? 'bg-brand-primary/10 text-brand-primary' : ''}
@@ -320,17 +320,17 @@ export function RecolectoresView({ onNavigateToMap }: RecolectoresViewProps) {
                 <p className="text-xs text-gray-600 mb-1">Bolsas Totales</p>
                 <p className="font-semibold text-brand-neutral">{collector.stats.totalBags}</p>
               </div>
-              
+
               <div className="bg-gray-50 rounded-lg p-3">
                 <p className="text-xs text-gray-600 mb-1">Cobertura Prom.</p>
                 <p className="font-semibold text-brand-neutral">{collector.stats.avgCoverage}%</p>
               </div>
-              
+
               <div className="bg-gray-50 rounded-lg p-3">
                 <p className="text-xs text-gray-600 mb-1">Recorridos</p>
                 <p className="font-semibold text-brand-neutral">{collector.stats.totalRoutes}</p>
               </div>
-              
+
               <div className="bg-gray-50 rounded-lg p-3">
                 <p className="text-xs text-gray-600 mb-1">Última Act.</p>
                 <p className="font-semibold text-brand-neutral text-xs">{collector.stats.lastActivity}</p>
@@ -338,14 +338,14 @@ export function RecolectoresView({ onNavigateToMap }: RecolectoresViewProps) {
             </div>
 
             <div className="flex items-center gap-2">
-              <button 
+              <button
                 onClick={() => onNavigateToMap?.(collector.id)}
                 className="flex-1 px-3 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-primary-dark transition-colors text-sm font-medium"
               >
                 <MapPin className="w-4 h-4 inline mr-1" />
                 Ver en Mapa
               </button>
-              
+
               <a
                 href={`tel:${collector.phone}`}
                 className="px-3 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"

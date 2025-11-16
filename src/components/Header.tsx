@@ -1,5 +1,4 @@
-import { Calendar, ChevronDown } from 'lucide-react';
-import { Button } from './ui/button';
+import { Calendar } from 'lucide-react';
 import {
   Select,
   SelectContent,
