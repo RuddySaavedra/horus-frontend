@@ -1,43 +1,50 @@
-import { MapContainer, TileLayer, Polyline } from "react-leaflet";
-import { type LatLngExpression } from "leaflet";
+// src/components/MapView.tsx
+import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { MICRO_ROUTES } from "../data/routes";
+import { LeafletRouting } from "./LeafletRouting";
 
-
-// Tipo mínimo para lo que viene desde RecorridosView
-interface MapCollector {
-    id: number;
-    name: string;
-    photo: string;
-    microroute: string;
-    status: "en-ruta" | "fuera-ruta" | "sin-señal";
-    lastUpdate: string;
-}
-
-export interface MapViewProps {
-    collectors: MapCollector[];
+interface MapViewProps {
+    collectors: unknown[];          // por ahora no los usamos
     selectedCollector: number | null;
+    selectedMacroroute: string;
 }
+const ROUTE_COLORS: Record<string, string> = {
+    Verde: "#16a34a",
+    Roja: "#dc2626",
+    Naranja: "#ea580c",
+    Lila: "#9333ea",
+    "Sin ruta": "#0ea5e9",
+};
 
-export function MapView({ collectors, selectedCollector }: MapViewProps) {
-    // Aunque todavía no uses collectors o selectedCollector,
-    // ya no habrá error de tipos.
-    // Aquí va tu lógica actual del mapa.
 
+export function MapView({ selectedMacroroute }: MapViewProps) {
+    const microroutes = MICRO_ROUTES[selectedMacroroute] ?? [];
+    const color = ROUTE_COLORS[selectedMacroroute] ?? "#16a34a";
     return (
-        <MapContainer
-            center={[-17.7833, -63.1821]} // Santa Cruz de la Sierra de ejemplo
-            zoom={13}
-            className="w-full h-80 rounded-xl overflow-hidden"
-        >
-            <TileLayer
-                attribution='&copy; OpenStreetMap contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
+        <div className="w-full h-full min-h-[500px] rounded-xl overflow-hidden border border-gray-300 shadow-md">
+            <MapContainer
+                center={[-17.7835, -63.1821]}
+                zoom={15}
+                className="w-full h-full"
+            >
+                <TileLayer
+                    attribution="&copy; OpenStreetMap contributors"
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
 
-            {/* Más adelante puedes usar `collectors` para dibujar marcadores */}
-            {/* collectors.map(c => (
-         <Marker key={c.id} position={[lat, lng]} />
-      )) */}
-        </MapContainer>
+                {/* Renderizar múltiples rutas según la macroruta seleccionada */}
+                {microroutes.map((route) => (
+                    <LeafletRouting
+                        key={route.id}
+                        from={route.from}
+                        to={route.to}
+                        color={color}
+                    />
+                ))}
+
+                {/* aquí luego podrás usar collectors / selectedCollector para markers */}
+            </MapContainer>
+        </div>
     );
 }

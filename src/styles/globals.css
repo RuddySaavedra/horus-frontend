@@ -1,6 +1,9 @@
 @import url('https://fonts.cdnfonts.com/css/gotham');
 @import "tailwindcss";
 @custom-variant dark (&:is(.dark *));
+.leaflet-routing-container {
+    display: none !important;
+}
 
 :root {
   --font-size: 16px;

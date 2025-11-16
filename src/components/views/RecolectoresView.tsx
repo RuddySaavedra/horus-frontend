@@ -107,8 +107,8 @@ const mockRecolectores: Recolector[] = [
   },
   {
     id: 6,
-    name: 'Laura Fernández',
-    photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Laura',
+    name: 'Maria Sanchez',
+    photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Luisa',
     employeeId: 'EMP-006',
     clockId: 'CLK-1239',
     macroroute: 'Roja',

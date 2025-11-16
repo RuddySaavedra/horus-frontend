@@ -36,12 +36,12 @@ export function RecorridosView({ selectedMacroroute, collectors, routes }: Recor
     <div className="flex flex-col gap-4 h-full">
       <div className="flex-1 flex gap-4">
         <div className="flex-1 flex flex-col gap-4">
-          <MapView 
-            macroroute={selectedMacroroute}
-            collectors={collectors}
-            selectedCollector={selectedCollector}
-          />
-          <RoutesTable routes={routes} />
+            <MapView
+                collectors={collectors}
+                selectedCollector={selectedCollector}
+                selectedMacroroute={selectedMacroroute}
+            />
+            <RoutesTable routes={routes} />
         </div>
         
         <CollectorsList 
