@@ -37,8 +37,8 @@ interface Recolector {
 const mockRecolectores: Recolector[] = [
   {
     id: 1,
-    name: 'Juan Pérez',
-    photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Juan',
+    name: 'Ruddy Saavedra',
+    photo: 'https://api.dicebear.com/7.x/notionists/svg?seed=Pepe',
     employeeId: 'EMP-001',
     clockId: 'CLK-1234',
     macroroute: 'Verde',
@@ -51,7 +51,7 @@ const mockRecolectores: Recolector[] = [
   },
   {
     id: 2,
-    name: 'María García',
+    name: 'Humberto Escobar',
     photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Maria',
     employeeId: 'EMP-002',
     clockId: 'CLK-1235',
@@ -65,8 +65,8 @@ const mockRecolectores: Recolector[] = [
   },
   {
     id: 3,
-    name: 'Carlos Mendoza',
-    photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Carlos',
+    name: 'Matias Castellanos',
+    photo: 'https://api.dicebear.com/7.x/notionists/svg?seed=Carlos',
     employeeId: 'EMP-003',
     clockId: 'CLK-1236',
     macroroute: 'Verde',
@@ -79,7 +79,7 @@ const mockRecolectores: Recolector[] = [
   },
   {
     id: 4,
-    name: 'Ana Rodríguez',
+    name: 'Victoria Frias',
     photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ana',
     employeeId: 'EMP-004',
     clockId: 'CLK-1237',
@@ -93,8 +93,8 @@ const mockRecolectores: Recolector[] = [
   },
   {
     id: 5,
-    name: 'Pedro Sánchez',
-    photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Pedro',
+    name: 'Laura Ortiz',
+    photo: 'https://api.dicebear.com/7.x/notionists/svg?seed=Laura',
     employeeId: 'EMP-005',
     clockId: 'CLK-1238',
     macroroute: 'Lila',
@@ -121,7 +121,7 @@ const mockRecolectores: Recolector[] = [
   },
   {
     id: 7,
-    name: 'Roberto Silva',
+    name: 'Claudio Da Silva',
     photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Roberto',
     employeeId: 'EMP-007',
     clockId: 'CLK-1240',
@@ -135,8 +135,8 @@ const mockRecolectores: Recolector[] = [
   },
   {
     id: 8,
-    name: 'Sofia Morales',
-    photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sofia',
+    name: 'Samuel Zarate',
+    photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Samuel',
     employeeId: 'EMP-008',
     clockId: 'CLK-1241',
     macroroute: 'Lila',
@@ -149,8 +149,8 @@ const mockRecolectores: Recolector[] = [
   },
   {
     id: 9,
-    name: 'Diego Vargas',
-    photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Diego',
+    name: 'Robert Lewandoski',
+    photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Robert',
     employeeId: 'EMP-009',
     clockId: 'CLK-1242',
     macroroute: 'Verde',
@@ -163,8 +163,8 @@ const mockRecolectores: Recolector[] = [
   },
   {
     id: 10,
-    name: 'Carmen López',
-    photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Carmen',
+    name: 'Leonel Messi',
+    photo: 'https://api.dicebear.com/7.x/notionists/svg?seed=Leonel',
     employeeId: 'EMP-010',
     clockId: 'CLK-1243',
     macroroute: 'Roja',
@@ -355,7 +355,7 @@ export function RecolectoresView() {
                         <Button 
                           variant="ghost" 
                           size="sm"
-                          onClick={(e: { stopPropagation: () => void; }) => {
+                          onClick={(e) => {
                             e.stopPropagation();
                             setSelectedRecolector(recolector);
                           }}
@@ -375,94 +375,101 @@ export function RecolectoresView() {
 
       {/* Side Panel */}
       {selectedRecolector && (
-        <div className="w-80 bg-white rounded-xl border border-gray-200 p-6 flex flex-col gap-6 animate-in slide-in-from-right">
-          <div className="flex items-start justify-between">
-            <div className="flex items-center gap-3">
-              <ImageWithFallback
-                src={selectedRecolector.photo}
-                alt={selectedRecolector.name}
-                className="w-16 h-16 rounded-full bg-gray-200"
-              />
-              <div>
-                <h3 className="text-lg text-gray-900">{selectedRecolector.name}</h3>
-                <p className="text-sm text-gray-500">{selectedRecolector.employeeId}</p>
+          <div className="w-80 bg-white rounded-xl border border-gray-200
+            p-6 flex flex-col gap-6 animate-in slide-in-from-right
+            max-h-[calc(100vh-140px)]">
+              {/* Contenido que puede hacer scroll */}
+              <div className="flex-1 flex flex-col gap-6 overflow-y-auto">
+                  <div className="flex items-start justify-between">
+                      <div className="flex items-center gap-3">
+                          <ImageWithFallback
+                              src={selectedRecolector.photo}
+                              alt={selectedRecolector.name}
+                              className="w-16 h-16 rounded-full bg-gray-200"
+                          />
+                          <div>
+                              <h3 className="text-lg text-gray-900">{selectedRecolector.name}</h3>
+                              <p className="text-sm text-gray-500">{selectedRecolector.employeeId}</p>
+                          </div>
+                      </div>
+                      <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setSelectedRecolector(null)}
+                          className="h-8 w-8 p-0"
+                      >
+                          <X className="w-4 h-4" />
+                      </Button>
+                  </div>
+
+                  <div className="space-y-4">
+                      <div>
+                          <p className="text-sm text-gray-600 mb-2">Estado Actual</p>
+                          <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm ${getStatusConfig(selectedRecolector.status).bg} ${getStatusConfig(selectedRecolector.status).textColor}`}>
+          <div className={`w-2 h-2 rounded-full ${getStatusConfig(selectedRecolector.status).color}`} />
+                              {getStatusConfig(selectedRecolector.status).text}
+        </span>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                          <div className="bg-gray-50 rounded-lg p-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                  <Package className="w-4 h-4 text-[#16A34A]" />
+                                  <p className="text-sm text-gray-600">Bolsas</p>
+                              </div>
+                              <p className="text-2xl text-gray-900">{selectedRecolector.bagsCollected}</p>
+                              <p className="text-xs text-gray-500 mt-1">recolectadas hoy</p>
+                          </div>
+
+                          <div className="bg-gray-50 rounded-lg p-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                  <TrendingUp className="w-4 h-4 text-[#0EA5E9]" />
+                                  <p className="text-sm text-gray-600">Cumplimiento</p>
+                              </div>
+                              <p className="text-2xl text-gray-900">{selectedRecolector.compliance}%</p>
+                              <p className="text-xs text-gray-500 mt-1">de cobertura</p>
+                          </div>
+                      </div>
+
+                      <div className="bg-gray-50 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-2">
+                              <AlertTriangle className="w-4 h-4 text-orange-600" />
+                              <p className="text-sm text-gray-600">Incidentes Reportados</p>
+                          </div>
+                          <p className="text-2xl text-gray-900">{selectedRecolector.incidents}</p>
+                          <p className="text-xs text-gray-500 mt-1">en esta jornada</p>
+                      </div>
+
+                      <div className="pt-4 border-t border-gray-200 space-y-2">
+                          <div className="flex items-center justify-between text-sm">
+                              <span className="text-gray-600">Macroruta:</span>
+                              <span className={`px-2 py-1 rounded ${macrorouteColors[selectedRecolector.macroroute].bg} ${macrorouteColors[selectedRecolector.macroroute].text}`}>
+            {selectedRecolector.macroroute}
+          </span>
+                          </div>
+                          <div className="flex items-center justify-between text-sm">
+                              <span className="text-gray-600">Microruta:</span>
+                              <span className="text-gray-900">{selectedRecolector.microroute}</span>
+                          </div>
+                          <div className="flex items-center justify-between text-sm">
+                              <span className="text-gray-600">ID Reloj:</span>
+                              <span className="text-gray-900">{selectedRecolector.clockId}</span>
+                          </div>
+                          <div className="flex items-center justify-between text-sm">
+                              <span className="text-gray-600">Última actualización:</span>
+                              <span className="text-gray-900">{selectedRecolector.lastUpdate}</span>
+                          </div>
+                      </div>
+                  </div>
               </div>
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setSelectedRecolector(null)}
-              className="h-8 w-8 p-0"
-            >
-              <X className="w-4 h-4" />
-            </Button>
+
+              {/* Botón fijo abajo */}
+              <Button className="w-full bg-brand-primary hover:bg-brand-primary-dark text-white mt-2">
+                  <MapPin className="w-4 h-4 mr-2" />
+                  Ver en Mapa
+              </Button>
           </div>
 
-          <div className="space-y-4">
-            <div>
-              <p className="text-sm text-gray-600 mb-2">Estado Actual</p>
-              <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm ${getStatusConfig(selectedRecolector.status).bg} ${getStatusConfig(selectedRecolector.status).textColor}`}>
-                <div className={`w-2 h-2 rounded-full ${getStatusConfig(selectedRecolector.status).color}`} />
-                {getStatusConfig(selectedRecolector.status).text}
-              </span>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gray-50 rounded-lg p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <Package className="w-4 h-4 text-[#16A34A]" />
-                  <p className="text-sm text-gray-600">Bolsas</p>
-                </div>
-                <p className="text-2xl text-gray-900">{selectedRecolector.bagsCollected}</p>
-                <p className="text-xs text-gray-500 mt-1">recolectadas hoy</p>
-              </div>
-
-              <div className="bg-gray-50 rounded-lg p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <TrendingUp className="w-4 h-4 text-[#0EA5E9]" />
-                  <p className="text-sm text-gray-600">Cumplimiento</p>
-                </div>
-                <p className="text-2xl text-gray-900">{selectedRecolector.compliance}%</p>
-                <p className="text-xs text-gray-500 mt-1">de cobertura</p>
-              </div>
-            </div>
-
-            <div className="bg-gray-50 rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <AlertTriangle className="w-4 h-4 text-orange-600" />
-                <p className="text-sm text-gray-600">Incidentes Reportados</p>
-              </div>
-              <p className="text-2xl text-gray-900">{selectedRecolector.incidents}</p>
-              <p className="text-xs text-gray-500 mt-1">en esta jornada</p>
-            </div>
-
-            <div className="pt-4 border-t border-gray-200 space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-600">Macroruta:</span>
-                <span className={`px-2 py-1 rounded ${macrorouteColors[selectedRecolector.macroroute].bg} ${macrorouteColors[selectedRecolector.macroroute].text}`}>
-                  {selectedRecolector.macroroute}
-                </span>
-              </div>
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-600">Microruta:</span>
-                <span className="text-gray-900">{selectedRecolector.microroute}</span>
-              </div>
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-600">ID Reloj:</span>
-                <span className="text-gray-900">{selectedRecolector.clockId}</span>
-              </div>
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-600">Última actualización:</span>
-                <span className="text-gray-900">{selectedRecolector.lastUpdate}</span>
-              </div>
-            </div>
-          </div>
-
-          <Button className="w-full bg-brand-primary hover:bg-brand-primary-dark text-white mt-auto">
-            <MapPin className="w-4 h-4 mr-2" />
-            Ver en Mapa
-          </Button>
-        </div>
       )}
     </div>
   );

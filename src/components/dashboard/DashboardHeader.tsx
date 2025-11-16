@@ -1,5 +1,5 @@
-import { Calendar, AlertCircle } from 'lucide-react';
-
+import {  AlertCircle } from 'lucide-react';
+import checkIcon from '../../assets/img.png';
 interface Microroute {
   status: 'En progreso' | 'Completada' | 'Desviada';
   incidents: number;
@@ -20,9 +20,7 @@ const macrorouteColors: { [key: string]: { bg: string; text: string; border: str
   Lila: { bg: 'bg-purple-100', text: 'text-purple-700', border: 'border-purple-500' }
 };
 
-export function DashboardHeader({ 
-  selectedDate, 
-  setSelectedDate, 
+export function DashboardHeader({
   selectedMacroroutes,
   toggleMacroroute,
   microroutes 
@@ -37,29 +35,17 @@ export function DashboardHeader({
         {/* Logo Section */}
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 bg-brand-primary rounded-xl flex items-center justify-center shadow-sm">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M16 4L8 8V14C8 19.55 11.84 24.74 16 26C20.16 24.74 24 19.55 24 14V8L16 4Z" fill="white"/>
-              <path d="M14 18L11 15L9.59 16.41L14 20.82L22.41 12.41L21 11L14 18Z" fill="#10813F"/>
-            </svg>
+              <img src={checkIcon} alt="icono" className="w-8 h-8" />
           </div>
           <div>
-            <h1 className="text-xl text-brand-neutral">Sistema de Microrutas</h1>
-            <p className="text-sm text-gray-500">Swisscontact + Emacruz</p>
+            <h1 className="text-xl text-brand-neutral">Track Me</h1>
+            <p className="text-sm text-gray-500">Swisscontact & Emacruz</p>
           </div>
         </div>
 
         {/* Controls Section */}
         <div className="flex items-center gap-6">
           {/* Date Picker */}
-          <div className="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-lg border border-gray-200">
-            <Calendar className="w-4 h-4 text-brand-neutral" />
-            <input
-              type="date"
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
-              className="bg-transparent text-sm focus:outline-none text-brand-neutral"
-            />
-          </div>
 
           {/* Macroroute Chips */}
           <div className="flex items-center gap-2">
