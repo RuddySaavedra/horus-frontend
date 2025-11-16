@@ -34,7 +34,6 @@ export function LeafletRouting({ from, to, color = "#16a34a" }: LeafletRoutingPr
             draggableWaypoints: false,
             fitSelectedRoutes: false,
             show: false,
-            createMarker: () => null, // sin marcadores por defecto
         }).addTo(map);
 
         // opcional: loguear errores sin spamear
